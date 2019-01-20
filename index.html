@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> GifTastic!</title>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    </head>
+
+    <body>
+        <div class = 'row'>
+            <div class = 'col-sm-12 addButton'>
+
+            </div>
+        </div>
+        <div class = 'row'>
+            <div class = 'col-sm-8 gifs'></div>
+            <div class = 'col-sm-4 inputForm'>
+                    <form>
+                            <div class="form-group">
+                              <label for="inputButton">Add a movie character</label>
+                              <input type="inputButton" class="form-control" id="characterInput" aria-describedby="character-help" >
+                            </div>
+                            <button type="submit" class="btn btn-primary submit">Submit</button>
+                    </form>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+    var characterArr = [];
+       
+       $(".submit").on('click',function(event){
+        event.preventDefault();
+        $('.addButton').empty();
+        var char = $('#characterInput').val();
+        characterArr.push(char);
+
+        for (i=0;i<characterArr.length;i++){
+        var charButton = $('<button>');
+        charButton.text(characterArr[i]);
+        charButton.addClass('userButton');
+        charButton.attr('data-person',characterArr[i]);
+        $('.addButton').append(charButton)
+        }
+        $('#characterInput').val('')
+       })
+
+       $(document).on('click','.userButton',function(){
+        $(".gifs").empty();
+        var character = $(this).attr('data-person');
+
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        character + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+        .then(function(response) {
+            console.log(response);
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+
+            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+
+              var gifDiv = $("<div>");
+
+              var rating = results[i].rating;
+
+              var p = $("<p>").text("Rating: " + rating);
+
+              var personImage = $("<img>");
+
+  
+              personImage.attr("src", results[i].images.fixed_height_still.url);
+              personImage.addClass('gif');
+              personImage.attr('data-still',results[i].images.fixed_height_still.url);
+              personImage.attr('data-animate',results[i].images.fixed_height.url);
+              personImage.attr('data-state','still');
+
+              gifDiv.append(p);
+              gifDiv.append(personImage);
+
+              $(".gifs").prepend(gifDiv);
+            }
+        }
+       })
+    })
+
+    $(document).on("click",'.gif',function(){
+        console.log($(this).attr('data-state'))
+        if ($(this).attr('data-state') === 'animate'){
+            $(this).attr('data-state','still');
+            $(this).attr('src',$(this).attr('data-still'))
+            
+        }
+        else{
+            $(this).attr('data-state','animate');
+            $(this).attr('src',$(this).attr('data-animate'));
+         
+
+        }
+    })
+
+      </script>
+</html>
