@@ -14,35 +14,40 @@
 
             </div>
         </div>
-        <div class = 'row'>
-            <div class = 'col-sm-8 gifs'></div>
-            <div class = 'col-sm-4 inputForm'>
+        
+            
+            <div class = 'inputForm'>
                     <form>
                             <div class="form-group">
-                              <label for="inputButton">Add a movie character</label>
+                              <label for="inputButton"><b>Add a movie character!</b></label>
                               <input type="inputButton" class="form-control" id="characterInput" aria-describedby="character-help" >
                             </div>
                             <button type="submit" class="btn btn-primary submit">Submit</button>
+                            <div class='instructions'> <b>Click on the image to animate/freeze it!</b></div>
                     </form>
             </div>
-        </div>
+            <div class = 'gifs'></div>
     </body>
     <script type="text/javascript">
-    var characterArr = [];
-       
-       $(".submit").on('click',function(event){
-        event.preventDefault();
-        $('.addButton').empty();
-        var char = $('#characterInput').val();
-        characterArr.push(char);
+    var characterArr = ['Mickey Mouse','Minnie Mouse',"Pluto","Goofy","Donald Duck"];
+       buttonCreator();
 
-        for (i=0;i<characterArr.length;i++){
+        function buttonCreator(){
+            for (i=0;i<characterArr.length;i++){
         var charButton = $('<button>');
         charButton.text(characterArr[i]);
         charButton.addClass('userButton');
         charButton.attr('data-person',characterArr[i]);
         $('.addButton').append(charButton)
         }
+        }
+
+       $(".submit").on('click',function(event){
+        event.preventDefault();
+        $('.addButton').empty();
+        var char = $('#characterInput').val();
+        characterArr.push(char);
+        buttonCreator();
         $('#characterInput').val('')
        })
 
@@ -67,20 +72,24 @@
             if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
 
               var gifDiv = $("<div>");
+                gifDiv.addClass('gifDiv');
 
               var rating = results[i].rating;
+              var type = results[i].type;
 
               var p = $("<p>").text("Rating: " + rating);
+              var p2 = $("<p>").text(("Type: ") + type);
 
               var personImage = $("<img>");
 
   
-              personImage.attr("src", results[i].images.fixed_height_still.url);
+              personImage.attr("src", results[i].images.fixed_height.url);
               personImage.addClass('gif');
               personImage.attr('data-still',results[i].images.fixed_height_still.url);
               personImage.attr('data-animate',results[i].images.fixed_height.url);
-              personImage.attr('data-state','still');
+              personImage.attr('data-state','animate');
 
+              gifDiv.append(p2);
               gifDiv.append(p);
               gifDiv.append(personImage);
 
