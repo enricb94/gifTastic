@@ -36,7 +36,31 @@ body{
     margin:10px;
     border:gray 1px solid;
     background: white;
+    padding-top:15px;
 }
 .gifs{
     width:70%;
+}
+
+.text{
+    font-weight: bold;
+    text-align: center;
+}
+
+@media screen and (max-width: 500px){
+    .userButton{
+        width:235px;
+    }
+    .inputForm{
+        float:none;
+        width:100%;
+        margin-bottom:50px;
+    }
+    .gif{
+        height:180px;
+        width:222px;
+    }
+    .gifs{
+    width:100%;
+    }
 }
