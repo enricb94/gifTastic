@@ -47,9 +47,9 @@ body{
     text-align: center;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width:1125px){
     .userButton{
-        width:235px;
+        width:540px;
     }
     .inputForm{
         float:none;
@@ -57,8 +57,8 @@ body{
         margin-bottom:50px;
     }
     .gif{
-        height:180px;
-        width:222px;
+        height:360px;
+        width:530px;
     }
     .gifs{
     width:100%;
