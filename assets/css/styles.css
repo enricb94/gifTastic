@@ -3,7 +3,7 @@
     height:170px;
     width:30%;
    float:right;
-
+    font-size: 20px;
 }
 
 .instructions{
@@ -24,6 +24,7 @@ body{
     background-color: rgb(13, 157, 106);
     color:white;
     padding:8px;
+    font-size: 20px;
 }
 
 .gif{
@@ -45,6 +46,7 @@ body{
 .text{
     font-weight: bold;
     text-align: center;
+    font-size:20px;
 }
 
 @media screen and (max-width:1125px){
@@ -75,5 +77,8 @@ body{
         width:400px;
         height:100px;
         font-size:50px;
+    }
+    .text{
+       font-size:40px;
     }
 }
